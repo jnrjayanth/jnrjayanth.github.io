@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research — Jayanth Nageswara Rao Merakanapalli</title>
+<meta name="description" content="Dashcam-Based Collision Anticipation (DCA) Using Multimodal Large Language Models: An Ablation Study. A zero-shot benchmark of eight vision-language models across 1,960 dashcam clips.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Franklin:wght@500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="index.html">Jayanth Merakanapalli<span>AI Engineer</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="research.html" aria-current="page">Research</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <div class="wrap page-head">
+    <span class="label">Master's thesis · University of Dayton · 2026</span>
+    <h1>Dashcam-Based Collision Anticipation Using Multimodal Large Language Models</h1>
+    <p class="lede">An ablation study of eight vision-language models on a task none of them were trained for: predicting a crash before it happens.</p>
+    <p class="small" style="margin-top:1.25rem;font-family:var(--mono);letter-spacing:.04em">Advised by Dr. Tam V. Nguyen · Committee: Dr. Tom Ongwere, Dr. Ju Shen</p>
+    <div class="actions">
+      <a class="btn primary" href="http://rave.ohiolink.edu/etdc/view?acc_num=dayton1777033201589199" target="_blank" rel="noopener">Read the thesis on OhioLINK</a>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="wrap split reveal">
+      <div>
+        <span class="label">The question</span>
+        <h2>A safety upgrade that needs no new hardware</h2>
+      </div>
+      <div>
+        <p class="lede">Modern autonomous vehicles carry sensors that watch the road for you. Almost nothing else on the road does — yet millions of ordinary cars already have a dashcam mounted to the windshield.</p>
+        <p>If footage from that camera could be read in real time by a model that anticipates collisions, it would be a safety upgrade delivered entirely in software, running on a phone or a small device beside the camera. That possibility only holds if a general-purpose model can do the reasoning without being trained on crash data first. So I tested whether it can.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split reveal">
+      <div>
+        <span class="label">Method</span>
+        <h2>One task, eight models, identical conditions</h2>
+      </div>
+      <div>
+        <p>I framed the problem as binary classification: given twelve frames sampled uniformly across a clip, predict whether a collision follows the final frame. Every clip was cut so the crash happens at or after the end of the sequence, which forces genuine anticipation rather than detection of something already visible.</p>
+        <p>The dataset combines 1,001 safe urban driving clips from D²-City, 801 ego-involved crashes from the Car Crash Dataset, and 158 animal and pedestrian incidents collected and labeled by hand — 1,960 clips and 23,520 frames in total.</p>
+        <p>All eight models ran zero-shot on the identical prompt, with a capped output budget and a strict JSON contract: prediction, confidence, and one sentence of reasoning. Commercial models were called through their APIs; open-source models ran locally on Ollama, and CLIP and BLIP-2 on RunPod GPU instances. Clips were processed in shuffled order with checkpoints every fifty runs.</p>
+      </div>
+    </div>
+
+    <div class="wrap" style="margin-top:2.5rem">
+      <div class="grid three reveal">
+        <div class="card">
+          <span class="idx">Commercial</span>
+          <h3>GPT-4o · Gemini 2.5 Flash · Claude Sonnet 4</h3>
+          <p>Native multimodal models, each receiving all twelve frames as separate images alongside the prompt.</p>
+        </div>
+        <div class="card">
+          <span class="idx">Open-source</span>
+          <h3>Llama 3.2 Vision 11B · LLaVA 13B · LLaVA 7B</h3>
+          <p>Self-hosted. Llama accepts one image only, so its twelve frames were tiled into a numbered 4×3 grid to preserve temporal order.</p>
+        </div>
+        <div class="card">
+          <span class="idx">Baseline</span>
+          <h3>CLIP ViT-L/14 · BLIP-2</h3>
+          <p>Included as a floor — if simple image-text matching could do this, the reasoning layer wouldn't be earning its cost.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <span class="label reveal">Results</span>
+      <h2 class="reveal">The ranking depends on what you ask it</h2>
+      <p class="lede reveal" style="margin-top:1rem">Switch the metric and the leaderboard rearranges. That instability is the finding, not a footnote to it.</p>
+
+      <div class="bench reveal">
+        <div class="bench-head">
+          <span class="t">1,960 clips · zero-shot · identical prompt</span>
+          <div class="tabs" role="tablist" aria-label="Metric">
+            <button class="tab" role="tab" data-metric="acc" aria-selected="true">Accuracy</button>
+            <button class="tab" role="tab" data-metric="rec" aria-selected="false">Recall</button>
+            <button class="tab" role="tab" data-metric="f1" aria-selected="false">F1</button>
+            <button class="tab" role="tab" data-metric="fn" aria-selected="false">Missed warnings</button>
+          </div>
+        </div>
+        <div class="rows" id="rows"></div>
+        <div class="legend">
+          <span><i style="background:var(--teal)"></i>Commercial</span>
+          <span><i style="background:var(--sage)"></i>Open-source</span>
+          <span><i style="background:repeating-linear-gradient(45deg,var(--brass) 0 4px,rgba(150,102,42,.18) 4px 9px)"></i>Zero-shot baseline</span>
+        </div>
+        <p class="bench-note" id="note"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <span class="label reveal">Findings</span>
+      <h2 class="reveal">What the numbers say</h2>
+      <div class="grid two reveal" style="margin-top:2rem">
+        <div class="card">
+          <span class="idx">01</span>
+          <h3>A thirty-point gap between commercial and open</h3>
+          <p>GPT-4o reached 82.3% accuracy. The strongest open-source model managed 52.9% — close enough to a coin flip that it carries no signal on a binary task. Open-source vision models aren't ready for safety-critical reasoning yet.</p>
+        </div>
+        <div class="card">
+          <span class="idx">02</span>
+          <h3>Accuracy is the wrong thing to rank on</h3>
+          <p>A false alarm annoys a driver; a missed crash can kill one. Claude Sonnet 4 places third on accuracy but misses the fewest genuine collisions of any usable model — 173 against GPT-4o's 223. For deployment, that trade is worth taking.</p>
+        </div>
+        <div class="card">
+          <span class="idx">03</span>
+          <h3>Matching is not reasoning</h3>
+          <p>BLIP-2 labeled all 1,960 clips unsafe and still scored 48.9%, because half the dataset genuinely is. CLIP was barely better. Image-text similarity cannot anticipate an event that hasn't happened yet.</p>
+        </div>
+        <div class="card">
+          <span class="idx">04</span>
+          <h3>There is a floor on model size</h3>
+          <p>LLaVA 13B and 7B share a vision encoder and architecture, differing only in language model size. The 13B caught six times more collisions — 183 against 31. Below some threshold, no amount of prompting recovers the capability.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split reveal">
+      <div>
+        <span class="label">Limitations</span>
+        <h2>What I'd want to fix next</h2>
+      </div>
+      <div>
+        <p>Every model ran zero-shot, so fine-tuning an open-source model on labeled crash data is the most obvious way to close the gap cheaply — LoRA would make that feasible on modest hardware. The models also saw still frames rather than video, which withholds the motion and closing-speed cues a human driver relies on most.</p>
+        <p>At 1,960 clips the dataset is a reasonable start but not a large one, and the pedestrian subset in particular is too small to draw firm conclusions from. Everything here ran offline; a real warning system has to beat the crash to the driver, which is a latency problem I haven't solved yet.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="inner">
+    <span>Jayanth Nageswara Rao Merakanapalli</span>
+    <span><a href="mailto:jayanthmerakanapalli@gmail.com">jayanthmerakanapalli@gmail.com</a></span>
+    <span>Dayton, Ohio</span>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+<script>
+(function(){
+  "use strict";
+  var MODELS=[
+    {name:"GPT-4o",               type:"commercial", tag:"Commercial",  acc:82.3, rec:76.7, f1:81.0, fn:223},
+    {name:"Gemini 2.5 Flash",     type:"commercial", tag:"Commercial",  acc:77.7, rec:72.6, f1:76.1, fn:263},
+    {name:"Claude Sonnet 4",      type:"commercial", tag:"Commercial",  acc:74.6, rec:82.0, f1:76.0, fn:173},
+    {name:"Llama 3.2 Vision 11B", type:"open",       tag:"Open-source", acc:48.4, rec:92.7, f1:63.8, fn:70},
+    {name:"LLaVA 13B",            type:"open",       tag:"Open-source", acc:52.9, rec:19.1, f1:28.4, fn:776},
+    {name:"LLaVA 7B",             type:"open",       tag:"Open-source", acc:52.0, rec:3.2,  f1:6.2,  fn:928},
+    {name:"CLIP ViT-L/14",        type:"baseline",   tag:"Baseline",    acc:50.5, rec:98.7, f1:66.1, fn:12},
+    {name:"BLIP-2",               type:"baseline",   tag:"Baseline",    acc:48.9, rec:100.0,f1:65.7, fn:0}
+  ];
+  var NOTES={
+    acc:"Overall correctness on the binary safe / unsafe call. GPT-4o leads at 82.3%, while every open-source model lands within a few points of a coin flip.",
+    rec:"Share of real collisions caught. CLIP and BLIP-2 look near-perfect here only because they call almost everything unsafe — recall on its own conceals a total failure.",
+    f1:"Precision and recall balanced together. Once both error types count, the three commercial models separate cleanly from everything else.",
+    fn:"Real collisions labeled safe, out of 959 unsafe clips. Lower is better. Among models that also work on safe footage, Claude Sonnet 4 misses fewest — which is why it, and not GPT-4o, is the deployment pick."
+  };
+  var MAX={acc:100,rec:100,f1:100,fn:959};
+  var rowsEl=document.getElementById("rows"),noteEl=document.getElementById("note");
+  var tabs=Array.prototype.slice.call(document.querySelectorAll(".tab"));
+
+  MODELS.forEach(function(m){
+    var r=document.createElement("div");
+    r.className="row";
+    r.innerHTML='<div class="name">'+m.name+'<span class="tag">'+m.tag+'</span></div>'+
+                '<div class="track"><div class="fill '+m.type+'"></div></div>'+
+                '<div class="val"></div>';
+    rowsEl.appendChild(r);
+  });
+  var fills=rowsEl.querySelectorAll(".fill"),vals=rowsEl.querySelectorAll(".val");
+  var current="acc",painted=false;
+
+  function paint(metric){
+    current=metric;
+    MODELS.forEach(function(m,i){
+      var v=m[metric];
+      fills[i].style.width = painted ? (v/MAX[metric]*100)+"%" : "0%";
+      vals[i].textContent = metric==="fn" ? v : v.toFixed(1)+"%";
+    });
+    noteEl.textContent=NOTES[metric];
+  }
+  paint("acc");
+
+  tabs.forEach(function(t){
+    t.addEventListener("click",function(){
+      tabs.forEach(function(x){x.setAttribute("aria-selected",String(x===t));});
+      painted=true;
+      paint(t.dataset.metric);
+    });
+  });
+
+  function kick(el){
+    if(painted) return;
+    if(el && !el.classList.contains("bench")) return;
+    painted=true;
+    setTimeout(function(){paint(current);},160);
+  }
+  document.addEventListener("reveal:show",function(e){kick(e.detail);});
+  document.addEventListener("reveal:all",function(){kick(null);});
+})();
+</script>
+</body>
+</html>

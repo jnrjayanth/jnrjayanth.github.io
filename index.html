@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jayanth Nageswara Rao Merakanapalli — AI Engineer</title>
+<meta name="description" content="AI Engineer working on multimodal large language models, vision-language evaluation, and applied LLM systems. M.S. Computer Science, University of Dayton, May 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Franklin:wght@500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="index.html">Jayanth Merakanapalli<span>AI Engineer</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="wrap">
+      <span class="label">AI Engineer · Dayton, Ohio</span>
+      <h1 class="nameplate">Jayanth<br>Nageswara Rao<br>Merakanapalli</h1>
+      <p class="tagline">Multimodal AI, measured honestly.</p>
+      <p class="lede">I build the pipelines that put vision-language models under real load — and report what they actually get right, including the results that undercut a good headline.</p>
+      <ul class="facts">
+        <li>M.S. Computer Science · May 2026</li>
+        <li>University of Dayton</li>
+        <li>GPA 3.96</li>
+      </ul>
+      <div class="actions">
+        <a class="btn primary" href="research.html">View my research</a>
+        <a class="btn" href="contact.html">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="band">
+    <div class="wrap" style="padding-top:2.5rem;padding-bottom:2.5rem">
+      <div class="stats">
+        <div><div class="n">1,960</div><div class="t">Dashcam clips</div></div>
+        <div><div class="n">8</div><div class="t">Models benchmarked</div></div>
+        <div><div class="n">23,520</div><div class="t">Frames processed</div></div>
+        <div><div class="n">15,680</div><div class="t">Inference runs</div></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="wrap split reveal">
+      <div>
+        <span class="label">What I do</span>
+        <h2>Measure before you ship</h2>
+      </div>
+      <div>
+        <p class="lede">Most of my work sits where a model meets a task nobody has tested it on yet. That means building the harness, curating the data, designing the prompt, running inference across commercial APIs and self-hosted open-source models, and reporting the numbers plainly.</p>
+        <p>I work in Python across PyTorch and Hugging Face, and with the OpenAI, Anthropic, and Google APIs. I'm equally comfortable moving a workload onto a local GPU when cost, latency, or privacy makes that the better call.</p>
+      </div>
+    </div>
+
+    <div class="wrap" style="margin-top:2.5rem">
+      <div class="grid three reveal">
+        <div class="card">
+          <span class="idx">01</span>
+          <h3>Evaluation pipelines</h3>
+          <p>End-to-end harnesses with strict output contracts, tolerant parsing, retry logic, checkpointing, and shuffled ordering — so a run survives interruption and the results stay trustworthy.</p>
+        </div>
+        <div class="card">
+          <span class="idx">02</span>
+          <h3>Vision-language models</h3>
+          <p>GPT-4o, Gemini, Claude, Llama Vision, LLaVA, CLIP, and BLIP-2 — served through commercial APIs or run locally on Ollama and RunPod GPU instances.</p>
+        </div>
+        <div class="card">
+          <span class="idx">03</span>
+          <h3>Applied LLM systems</h3>
+          <p>RAG pipelines with LangChain and LlamaIndex, prompt engineering under structured JSON constraints, and LoRA fine-tuning on constrained hardware.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <span class="label reveal">Selected work</span>
+      <div class="split reveal">
+        <div>
+          <h2>Can a dashcam see it coming?</h2>
+        </div>
+        <div>
+          <p class="lede">Millions of cars have no collision warning system but already carry a dashcam. My thesis asks whether a general-purpose vision-language model, with no task-specific training, can look at twelve frames of footage and tell you a crash is about to happen.</p>
+          <p>I built a 1,960-clip benchmark spanning safe urban driving, ego-involved crashes, animal encounters, and pedestrian incidents, then ran eight models against it under identical zero-shot conditions. GPT-4o led on accuracy at 82.3% — but accuracy turned out to be the wrong thing to rank on.</p>
+          <div class="actions">
+            <a class="btn primary" href="research.html">Read the full study</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="grid two reveal">
+        <a class="linkcard" href="experience.html">
+          <span class="label" style="margin-bottom:.6rem">Experience</span>
+          <h3>Research and teaching at the University of Dayton</h3>
+          <p class="small">Computer vision research, three undergraduate courses supported, and the toolkit behind both.</p>
+          <span class="arrow">See experience →</span>
+        </a>
+        <a class="linkcard" href="contact.html">
+          <span class="label" style="margin-bottom:.6rem">Availability</span>
+          <h3>Open to AI and ML engineering roles from May 2026</h3>
+          <p class="small">Based in Dayton, Ohio. Email is the fastest way to reach me.</p>
+          <span class="arrow">Get in touch →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="inner">
+    <span>Jayanth Nageswara Rao Merakanapalli</span>
+    <span><a href="mailto:jayanthmerakanapalli@gmail.com">jayanthmerakanapalli@gmail.com</a></span>
+    <span>Dayton, Ohio</span>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>
